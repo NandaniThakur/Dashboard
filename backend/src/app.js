@@ -18,6 +18,10 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import dashboardRoleRoutes from "./routes/auth/DashboardRoleRoutes.js";
+import invoiceRoutes from "./routes/invoice/routes.js";
+import clientRoutes from "./routes/client/routes.js";
+import companyRoutes from "./routes/company/routes.js";
+import manpowerRoutes from "./routes/manpower/routes.js";
 
 
 dotenv.config();
@@ -37,12 +41,16 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/api/auth", authRoutes);  
-app.use("/api/dashboard", dashboardRoleRoutes);     
+app.use("/api/dashboard", dashboardRoleRoutes);
+app.use("/api/invoices", invoiceRoutes);
+app.use("/api/clients", clientRoutes);
+app.use("/api/company", companyRoutes);
+app.use("/api/manpower", manpowerRoutes);     
 
 //something runnng o th serer
-    //   app.get("/", (req, res) => {
-    //         res.send("Backend Server Running 🚀");
-    //         });
+app.get("/", (req, res) => {
+    res.send("Backend Server Running ---- 🚀");
+});
 
 // Connect to MongoDB and start the server
 const PORT = process.env.PORT || 3005;
