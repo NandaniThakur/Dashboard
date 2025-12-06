@@ -48,6 +48,17 @@ export default function RoleManagementPage() {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this user?")) return;
+
+    try {
+      await api.delete(`/auth/${id}`);
+      fetchUsers();
+    } catch (error: any) {
+      alert(error.response?.data?.message || "Failed to delete user");
+    }
+  };
+
   if (loading) {
     return (
       <DashboardLayout userRole="admin">
@@ -140,10 +151,19 @@ export default function RoleManagementPage() {
                         <option value="admin-sup">Admin-Supervisor</option>
                       </select>
                     </td>
+                    
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                       {new Date(user.createdAt).toLocaleDateString()}
                     </td>
+                    <td > <button
+                            onClick={() => handleDelete(user._id)}
+                            className="text-red-600 hover:text-red-900 dark:text-red-400"
+                          >
+                            Delete
+                          </button>
+                      </td>
                   </tr>
+                  
                 ))}
               </tbody>
             </table>
